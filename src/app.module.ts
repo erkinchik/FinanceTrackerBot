@@ -1,19 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { TelegramModule } from './telegram/telegram.module';
-import { getTelegramConfig } from './configs/telegram.config';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot(),
-    TelegramModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: getTelegramConfig,
-    }),
-  ],
+  imports: [ConfigModule.forRoot({ isGlobal: true }), TelegramModule],
   controllers: [AppController],
   providers: [AppService],
 })
