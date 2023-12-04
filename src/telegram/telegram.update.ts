@@ -11,27 +11,28 @@ import {
 import { TelegramOptions } from '../common/interfaces/telegram.interface';
 
 @Update()
-export class TelegramService {
+export class TelegramUpdate {
   options: TelegramOptions;
 
   constructor(@InjectBot() private bot: Telegraf<Context>) {}
   @Start()
-  async start(@Ctx() ctx: any) {
+  async start(@Ctx() ctx: Context) {
     await ctx.reply('Welcome');
   }
 
   @Help()
-  async help(@Ctx() ctx: any) {
+  async help(@Ctx() ctx: Context) {
     await ctx.reply('Send me a sticker');
   }
 
-  @On('sticker')
-  async on(@Ctx() ctx: any) {
-    await ctx.reply('👍');
+  @On('text')
+  async on(@Ctx() ctx: Context) {
+    console.log(ctx.from);
+    await ctx.reply('ok');
   }
 
   @Hears('hi')
-  async hears(@Ctx() ctx: any) {
+  async hears(@Ctx() ctx: Context) {
     await ctx.reply('Hey there');
   }
 }
